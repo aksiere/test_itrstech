@@ -112,7 +112,7 @@
 				</div>
 			</div>
 
-			<div class='flex justify-center gap-[.5rem]'>
+			<div class='flex justify-center gap-[.5rem] select-none'>
 				<Button onclick={prevPage} disabled={curPage === 0}>Назад</Button>
 				<Button onclick={nextPage} disabled={curPage === Math.ceil(filteredItems.length / perPage) - 1}>Вперед</Button>
 			</div>
