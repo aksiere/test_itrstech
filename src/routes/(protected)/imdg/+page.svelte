@@ -70,7 +70,7 @@
 			{@const filteredItems = filterItems(items)}
 			
 			<div class='flex justify-between'>
-				<div class='grid grid-cols-[200px_200px_200px] gap-[1rem] items-end flex-wrap'>
+				<div class='grid grid-cols-1 lg:grid-cols-[200px_200px_200px] gap-[1rem] items-end flex-wrap'>
 					{#each Object.keys(filters) as key, i (i)}
 						{@const filterKey = key as FilterKeys}
 						<div class='flex flex-col gap-[.25rem]'>
@@ -84,7 +84,10 @@
 						</div>
 					{/each}
 				</div>
-				<Button onclick={() => filters = { col3: 'all', col9: 'all', col17: 'all' }}>Сбросить параметры</Button>
+				
+				<div>
+					<Button onclick={() => filters = { col3: 'all', col9: 'all', col17: 'all' }}>Сбросить параметры</Button>
+				</div>
 			</div>
 			
 			<div class='flex flex-col gap-[.5rem]'>
