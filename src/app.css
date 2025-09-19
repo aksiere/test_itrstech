@@ -6,6 +6,8 @@
 	--color-2: #ddd;
 	--color-9: #000;
 
+	--color-muted: #777;
+
 	--rounded: 14px;
 }
 
@@ -22,8 +24,6 @@
 
 body {
 	height: 100dvh;
-	display: flex;
-	flex-direction: column;
 
 	background: var(--color-0);
 	color: var(--color-9);

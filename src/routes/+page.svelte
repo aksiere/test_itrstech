@@ -6,7 +6,7 @@
 	export let form: ActionData
 </script>
 
-<div class='flex-1 grid place-items-center'>
+<div class='flex-1 grid items-center'>
 	<div class='grid grid-rows-2 gap-[2rem]'>
 		<div>
 			<p class='text-center'>Авторизация</p>
@@ -16,7 +16,7 @@
 			{/if}
 		</div>
 
-		<form class='flex gap-[.125rem]' action='?/auth' method='post' use:enhance={() => {
+		<form class='flex justify-center gap-[.125rem]' action='?/auth' method='post' use:enhance={() => {
 			return async ({ result }) => {
 				console.log(result)
 				await applyAction(result)
