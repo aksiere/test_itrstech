@@ -1,20 +1,12 @@
 <script>
 	let {
 		value = $bindable(''),
-		pseudoDisabled = false,
 		..._
 	} = $props()
-
-	let component
-
-	export function get() {
-		return component
-	}
 </script>
 
 <input
 	bind:value
-	bind:this={component}
 	type='text'
 
 	class:px-[1rem]={true}
@@ -29,8 +21,6 @@
 	class:placeholder:text-muted={true}
 	class:disabled:pointer-events-none={true}
 	class:disabled:opacity-50={true}
-	class:pointer-events-none={pseudoDisabled}
-	class:opacity-50={pseudoDisabled}
 	class:transition-[background]={true}
 	class:duration-250={true}
 	class:focus:z-100={true}
