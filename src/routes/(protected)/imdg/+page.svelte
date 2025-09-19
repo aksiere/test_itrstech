@@ -7,11 +7,9 @@
 	
 	const perPage = 5
 	let curPage = $state(0)
-
 	let search = $state('')
 
 	type FilterKeys = 'col3' | 'col9' | 'col17';
-
 	let filters = $state<Record<FilterKeys, string>>({
 		col3: 'all',
 		col9: 'all',
@@ -19,49 +17,37 @@
 	})
 	
 	function getFiltered(items: any[], column: string) {
-		let filtered = items
-		
-		if (search.trim()) filtered = filtered.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
-		if (column !== 'col3' && filters.col3 !== 'all') filtered = filtered.filter(item => item.col3 && item.col3.toString().trim() === filters.col3)
-		if (column !== 'col9' && filters.col9 !== 'all') filtered = filtered.filter(item => item.col9 && item.col9.toString().trim() === filters.col9)
-		if (column !== 'col17' && filters.col17 !== 'all') filtered = filtered.filter(item => item.col17 && item.col17.toString().trim() === filters.col17)
-		
-		const values = filtered
-			.map(item => item[column])
-			.filter(value => value && value.toString().trim() !== '')
-			.map(value => value.toString().trim())
-		
-		return [...new Set(values)].sort()
+		return [...new Set(
+			items
+				.filter(item =>
+					item.name.toLowerCase().includes(search.toLowerCase().trim()) &&
+					(Object.entries(filters) as [FilterKeys, string][]).every(
+						([key, val]) => key === column || val === 'all' || (item[key] && item[key].toString().trim() === val)
+					)
+				)
+				.map(item => item[column]?.toString().trim())
+				.filter(Boolean)
+		)].sort()
 	}
-	
+
 	function filterItems(items: any[]) {
-		let filtered = items
-		
-		if (search.trim()) filtered = filtered.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
-		if (filters.col3 !== 'all') filtered = filtered.filter(item => item.col3 && item.col3.toString().trim() === filters.col3)
-		if (filters.col9 !== 'all') filtered = filtered.filter(item => item.col9 && item.col9.toString().trim() === filters.col9)
-		if (filters.col17 !== 'all') filtered = filtered.filter(item => item.col17 && item.col17.toString().trim() === filters.col17)
-
-		return filtered
-	}
-	
-	function resetCurrentPage() {
-		curPage = 0
+		return items.filter(item =>
+			item.name.toLowerCase().includes(search.toLowerCase().trim()) &&
+			(Object.entries(filters) as [FilterKeys, string][]).every(
+				([key, val]) => val === 'all' || (item[key] && item[key].toString().trim() === val)
+			)
+		)
 	}
 
-	function nextPage() {
-		curPage += 1
-	}
-	
-	function prevPage() {
-		curPage -= 1
-	}
+	const resetCurPage = () => curPage = 0
+	const nextPage = () => curPage += 1
+	const prevPage = () => curPage -= 1
 </script>
 
 <div class='flex-1 h-full flex flex-col gap-[2rem]'>
 	<div class='flex flex-col gap-[.5rem]'>
 		<p class='font-medium text-xl'>Список опасных грузов</p>
-		<Input class='w-full' bind:value={search}  placeholder='Поиск по названию' oninput={resetCurrentPage} />
+		<Input class='w-full' bind:value={search}  placeholder='Поиск по названию' oninput={resetCurPage} />
 	</div>
 
 	<div class='flex flex-col gap-[2rem]'>
@@ -76,7 +62,7 @@
 						{@const filterKey = key as FilterKeys}
 						<div class='flex flex-col gap-[.25rem]'>
 							<label for={`${key}-filter`} class='text-sm text-muted'>{key}</label>
-							<select bind:value={filters[filterKey]} onchange={resetCurrentPage}>
+							<select bind:value={filters[filterKey]} onchange={resetCurPage}>
 								<option value='all'>Все</option>
 								{#each getFiltered(items, key) as value (value)}
 									<option value={value}>{value}</option>
