@@ -5,42 +5,31 @@ import type { Actions } from './$types'
 export const actions = {
 	auth: async ({ request, cookies }) => {
 		const { username, password } = Object.fromEntries(await request.formData())
+		console.log(username, password);
+		
 
-		try {
-			const response = await fetch(`${API_URL}/api/authentication`, {
-				method: 'GET',
-				headers: {
-					'Authorization': 'Basic ' + btoa(username + ':' + password),
-					'Content-Type': 'application/json'
-				}
-			})
-
-			console.log(response);
-			
-
-			if (!response.ok) {
-				return {
-					error: 'Неверные учетные данные'
-				}
+		const response = await fetch(`${API_URL}/api/authentication`, {
+			method: 'GET',
+			headers: {
+				'Authorization': 'Basic ' + btoa(username + ':' + password),
+				'Content-Type': 'application/json'
 			}
+		})
 
-			const { access, stage } = await response.json()
-
-			cookies.set('access', access.token, {
-				httpOnly: true,
-				path: '/',
-				maxAge: 900
-			})
-
-			redirect(301, '/imdg')
-		} catch (error) {
-			if (error instanceof Response) {
-				throw error
-			}
-			
+		if (!response.ok) {
 			return {
-				error: 'Ошибка авторизации'
+				error: 'Неверные учетные данные'
 			}
 		}
+
+		const { access: { token, lifeTime } } = await response.json()
+
+		cookies.set('access', token, {
+			httpOnly: true,
+			path: '/',
+			maxAge: lifeTime
+		})
+
+		redirect(308, `/imdg`)
 	}
 } satisfies Actions;

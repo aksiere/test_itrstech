@@ -13,16 +13,27 @@ export const handle: Handle = async ({ event, resolve }) => {
 			redirect(302, '/')
 		}
 
-		// if (accessToken) {
-		// 	const response = await fetch(`${API_URL}/api/authentication/refresh`, {
-		// 		method: 'GET',
-		// 		credentials: 'include',
-		// 		headers: {
-		// 			'Token': `${accessToken}`,
-		// 			'User-Agent': 'api'
-		// 		}
-		// 	})
-		// }
+		if (accessToken) {
+			// в идеале конечно здесь еще роут /verify чтобы проверять валиден ли текущий access_token jwt.
+			// из доки не совсем понятно как обновлять токен: при пустом запросе из доков обновляется кука доков, а при запросе извне - 401 в любом случае
+
+			// const response = await fetch(`${API_URL}/api/authentication/refresh`, {
+			// 	method: 'GET',
+			// 	credentials: 'include',
+			// 	headers: {
+			// 		'Token': `${accessToken}`,
+			// 		'User-Agent': 'api'
+			// 	}
+			// })
+
+			// const { access: { token, lifeTime } } = await response.json()
+
+			// cookies.set('access', token, {
+			// 	httpOnly: true,
+			// 	path: '/',
+			// 	maxAge: lifeTime
+			// })
+		}
 	}
 	
 	return resolve(event)

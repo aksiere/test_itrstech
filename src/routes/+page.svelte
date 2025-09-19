@@ -7,12 +7,14 @@
 </script>
 
 <div class='flex-1 grid place-items-center'>
-	<div>
-		<p>Авторизация</p>
+	<div class='grid grid-rows-2 gap-[2rem]'>
+		<div>
+			<p class='text-center'>Авторизация</p>
 
-		{#if form?.error}
-			<p class='text-red-500 mb-2'>{form.error}</p>
-		{/if}
+			{#if form?.error}
+				<p class='text-red-500 text-center'>{form.error}</p>
+			{/if}
+		</div>
 
 		<form class='flex gap-[.125rem]' action='?/auth' method='post' use:enhance={() => {
 			return async ({ result }) => {
@@ -21,7 +23,7 @@
 			}
 		}}>
 			<div class='flex flex-col gap-[.125rem] *:rounded-[.375rem] *:first:rounded-tl-[var(--rounded)] *:last:rounded-bl-[var(--rounded)]'>
-				<Input type='text' name='username' placeholder='Логин' />
+				<Input name='username' placeholder='Логин' />
 				<Input type='password' name='password' placeholder='Пароль' />
 			</div>
 
