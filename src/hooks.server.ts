@@ -7,6 +7,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 	
 	const accessToken = cookies.get('access')
 	const isProtectedRoute = event.route.id?.includes('protected')
+
+	if (url.pathname === '/') {
+		if (accessToken) {
+			redirect(302, '/imdg')
+		}
+	}
 	
 	if (isProtectedRoute) {
 		if (!accessToken) {

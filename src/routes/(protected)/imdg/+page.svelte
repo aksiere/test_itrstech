@@ -1,4 +1,5 @@
 <script lang='ts'>
+    import { enhance } from '$app/forms'
     import Button from '$lib/components/src/Button.svelte'
     import Input from '$lib/components/src/Input.svelte'
 
@@ -57,7 +58,7 @@
 	}
 </script>
 
-<div class='flex flex-col gap-[2rem]'>
+<div class='h-full flex flex-col gap-[2rem]'>
 	<div class='flex flex-col gap-[.5rem]'>
 		<p class='font-medium text-xl'>Список опасных грузов</p>
 		<Input class='w-full' bind:value={search}  placeholder='Поиск по названию' oninput={resetCurrentPage} />
@@ -84,7 +85,7 @@
 						</div>
 					{/each}
 				</div>
-				
+
 				<div>
 					<Button onclick={() => filters = { col3: 'all', col9: 'all', col17: 'all' }}>Сбросить параметры</Button>
 				</div>
@@ -117,15 +118,8 @@
 			</div>
 		{/await}
 	</div>
-</div>
 
-<!-- <div class='flex-1'>
-	<div class='text-center'>
-		<h1 class='text-2xl font-bold mb-4'>IMDG - Защищенная страница</h1>
-		<p class='mb-4'>Добро пожаловать! Вы успешно авторизованы.</p>
-		
-		<form action='?/logout' method='post' use:enhance>
-			<Button type='submit'>Выйти</Button>
-		</form>
-	</div>
-</div> -->
+	<form class='mt-auto' action='?/logout' method='post' use:enhance>
+		<Button>Выйти</Button>
+	</form>
+</div>

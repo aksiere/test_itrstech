@@ -10,7 +10,7 @@
 </svelte:head>
 
 <div class='h-full max-w-[1200px] mx-auto'>
-	<div class='h-full flex flex-col p-[1rem]'>
+	<div class='min-h-full flex flex-col p-[2rem]'>
 		{@render children?.()}
 	</div>
 </div>
