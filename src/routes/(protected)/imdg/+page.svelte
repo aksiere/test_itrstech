@@ -87,7 +87,10 @@
 				</div>
 
 				<div>
-					<Button onclick={() => filters = { col3: 'all', col9: 'all', col17: 'all' }}>Сбросить параметры</Button>
+					<Button onclick={() => {
+						filters = { col3: 'all', col9: 'all', col17: 'all' }
+						search = ''
+					}}>Сбросить параметры</Button>
 				</div>
 			</div>
 			
