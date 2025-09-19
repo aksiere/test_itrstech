@@ -58,7 +58,7 @@
 	}
 </script>
 
-<div class='h-full flex flex-col gap-[2rem]'>
+<div class='flex-1 h-full flex flex-col gap-[2rem]'>
 	<div class='flex flex-col gap-[.5rem]'>
 		<p class='font-medium text-xl'>Список опасных грузов</p>
 		<Input class='w-full' bind:value={search}  placeholder='Поиск по названию' oninput={resetCurrentPage} />
