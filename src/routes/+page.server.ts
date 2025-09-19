@@ -15,6 +15,9 @@ export const actions = {
 				}
 			})
 
+			console.log(response);
+			
+
 			if (!response.ok) {
 				return {
 					error: 'Неверные учетные данные'
@@ -23,7 +26,7 @@ export const actions = {
 
 			const { access, stage } = await response.json()
 
-			cookies.set('refresh', access.token, {
+			cookies.set('access', access.token, {
 				httpOnly: true,
 				path: '/',
 				maxAge: 900
