@@ -18,13 +18,13 @@
 		col17: 'all'
 	})
 	
-	function getFiltered(items: any[], column: string, excludeColumn?: string) {
+	function getFiltered(items: any[], column: string) {
 		let filtered = items
 		
 		if (search.trim()) filtered = filtered.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
-		if (excludeColumn !== 'col3' && filters.col3 !== 'all') filtered = filtered.filter(item => item.col3 && item.col3.toString().trim() === filters.col3)
-		if (excludeColumn !== 'col9' && filters.col9 !== 'all') filtered = filtered.filter(item => item.col9 && item.col9.toString().trim() === filters.col9)
-		if (excludeColumn !== 'col17' && filters.col17 !== 'all') filtered = filtered.filter(item => item.col17 && item.col17.toString().trim() === filters.col17)
+		if (column !== 'col3' && filters.col3 !== 'all') filtered = filtered.filter(item => item.col3 && item.col3.toString().trim() === filters.col3)
+		if (column !== 'col9' && filters.col9 !== 'all') filtered = filtered.filter(item => item.col9 && item.col9.toString().trim() === filters.col9)
+		if (column !== 'col17' && filters.col17 !== 'all') filtered = filtered.filter(item => item.col17 && item.col17.toString().trim() === filters.col17)
 		
 		const values = filtered
 			.map(item => item[column])
@@ -78,7 +78,7 @@
 							<label for={`${key}-filter`} class='text-sm text-muted'>{key}</label>
 							<select bind:value={filters[filterKey]} onchange={resetCurrentPage}>
 								<option value='all'>Все</option>
-								{#each getFiltered(items, key, key) as value (value)}
+								{#each getFiltered(items, key) as value (value)}
 									<option value={value}>{value}</option>
 								{/each}
 							</select>
