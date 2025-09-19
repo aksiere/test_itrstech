@@ -1,1 +1,17 @@
 @import 'tailwindcss';
+
+@theme {
+	--color-0: #fff;
+	--color-1: #eee;
+	--color-2: #ddd;
+	--color-9: #000;
+}
+
+body {
+	height: 100dvh;
+	display: flex;
+	flex-direction: column;
+
+	background: var(--color-0);
+	color: var(--color-9);
+}
