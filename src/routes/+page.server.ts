@@ -6,28 +6,26 @@ export const actions = {
 	auth: async ({ request, cookies }) => {
 		const { username, password } = Object.fromEntries(await request.formData())
 		console.log(username, password);
-		
 
-		const response = await fetch(`${API_URL}/api/authentication`, {
+		const response = await (await fetch(`${API_URL}/api/authentication`, {
 			method: 'GET',
 			headers: {
 				'Authorization': 'Basic ' + btoa(username + ':' + password),
 				'Content-Type': 'application/json'
 			}
-		})
+		})).json()
 
-		if (!response.ok) {
+		if (response.error) {
 			return {
-				error: 'Неверные учетные данные'
+				code: response.statusCode,
+				error: response.message
 			}
 		}
 
-		const { access: { token, lifeTime } } = await response.json()
-
-		cookies.set('access', token, {
+		cookies.set('access', response.access.token, {
 			httpOnly: true,
 			path: '/',
-			maxAge: lifeTime
+			maxAge: response.access.lifeTime
 		})
 
 		redirect(308, `/imdg`)
